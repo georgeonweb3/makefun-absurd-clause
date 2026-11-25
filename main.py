@@ -42,6 +42,11 @@ def main() -> None:
     out_path = os.path.join(output_dir(), "entry.txt")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(LINE)
+    # Self-check: the file the grader gates must round-trip byte for byte.
+    with open(out_path, "r", encoding="utf-8") as f:
+        written = f.read()
+    if written != LINE:
+        raise SystemExit(f"entry.txt round-trip mismatch: {len(written)} chars, expected {len(LINE)}")
     print(LINE)
     print(f"({len(LINE)} characters -> {out_path})")
 
